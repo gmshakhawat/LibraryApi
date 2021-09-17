@@ -5,6 +5,8 @@ import com.softrear.libraryapi.entity.Book;
 import com.softrear.libraryapi.model.CommonResponse;
 import com.softrear.libraryapi.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,7 +85,7 @@ public class BookService {
     }
 
 
-    public CommonResponse searchBookByIdOrTitle(String type) {
+    public CommonResponse searchBookByIdOrTitle(String value, Pageable pageable) {
         CommonResponse commonResponse=new CommonResponse();
         ObjectMapper objectMapper=new ObjectMapper();
         try {
@@ -91,12 +93,12 @@ public class BookService {
             commonResponse.setHasError(false);
             commonResponse.setDecentMessage("Success");
 //
-            List<Book> books = bookRepository.findAllByTitle(type);
-            if(books.isEmpty()){
-                throw new Exception("Data Not Found with the type of "+type);
+            Page<Book> books = bookRepository.findAllByTitleContainingOrIdContaining(value,pageable);
+            if(books.getContent().isEmpty()){
+                throw new Exception("Data Not Found with the type of "+value);
             }
 
-            commonResponse.setContent(objectMapper.writeValueAsString(books));
+            commonResponse.setContent(objectMapper.writeValueAsString(books.getContent()));
         }catch (Exception e){
             e.printStackTrace();
             commonResponse.setHasError(true);

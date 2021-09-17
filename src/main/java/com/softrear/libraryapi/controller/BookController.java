@@ -5,6 +5,7 @@ import com.softrear.libraryapi.entity.Book;
 import com.softrear.libraryapi.model.CommonResponse;
 import com.softrear.libraryapi.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,8 +26,8 @@ public class BookController {
         }
 
     @RequestMapping(method = RequestMethod.GET, value = "/books/search/{value}")
-    public CommonResponse searchBookByIdOrTitle(@PathVariable String value){
-        return bookService.searchBookByIdOrTitle(value);
+    public CommonResponse searchBookByIdOrTitle(@PathVariable String value, Pageable pageable){
+        return bookService.searchBookByIdOrTitle(value,pageable);
     }
 
 
