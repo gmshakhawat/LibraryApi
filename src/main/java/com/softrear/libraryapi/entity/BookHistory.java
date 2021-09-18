@@ -21,7 +21,7 @@ public class BookHistory extends AuditModel {
 //    @Column(name = "book_id")
 //    private Long bookId;
 
-    private boolean isReturned;
+    private Boolean isReturned;
     @Column(name = "copy_after")
     private Long copyAfter;
 

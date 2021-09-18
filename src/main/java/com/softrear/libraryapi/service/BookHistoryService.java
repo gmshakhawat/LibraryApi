@@ -46,7 +46,7 @@ public class BookHistoryService {
             if(bookList.getContent().isEmpty()){
                 throw new Exception("Data Not Found");
             }
-            commonResponse.setContent(objectMapper.writeValueAsString(bookList.getContent()));
+            commonResponse.setContent(objectMapper.writeValueAsString(bookList));
         }catch (Exception e){
             e.printStackTrace();
             commonResponse.setHasError(true);
@@ -56,6 +56,42 @@ public class BookHistoryService {
 
         return commonResponse;
     }
+
+    public CommonResponse getBookHistoryByStatus(String type,  Pageable pageable) {
+        CommonResponse commonResponse=new CommonResponse();
+        ObjectMapper objectMapper=new ObjectMapper();
+        try {
+            commonResponse.setHasError(false);
+            commonResponse.setDecentMessage("Book History List Found!");
+
+
+            boolean status=false;
+            if(type.equals("return")){
+                status=true;
+            }
+
+
+            Page<BookHistory> bookList = bookHistoryRepository.findByIsReturned(status, pageable);
+            for(BookHistory bookHistory:bookList){
+                User user = bookHistory.getUser();
+                bookHistory.setUser(user);
+            }
+
+            if(bookList.getContent().isEmpty()){
+                throw new Exception("Data Not Found");
+            }
+            commonResponse.setContent(objectMapper.writeValueAsString(bookList));
+        }catch (Exception e){
+            e.printStackTrace();
+            commonResponse.setHasError(true);
+            commonResponse.setErrorDetails(e.getMessage());
+            commonResponse.setDecentMessage("Data not Found");
+        }
+
+        return commonResponse;
+    }
+
+
     public CommonResponse getBookHistoryByBookId(Long bookId, Pageable pageable) {
         CommonResponse commonResponse=new CommonResponse();
         ObjectMapper objectMapper=new ObjectMapper();
@@ -87,7 +123,7 @@ public class BookHistoryService {
             commonResponse.setDecentMessage("Book History List Found!");
 
 
-            Page<BookHistory> bookList = bookHistoryRepository.findByBookIdAndReturned(userId,status, pageable);
+            Page<BookHistory> bookList = bookHistoryRepository.findByBookIdAndIsReturned(userId,status, pageable);
             if(bookList.getContent().isEmpty()){
                 throw new Exception("Data Not Found");
             }
@@ -136,7 +172,7 @@ public class BookHistoryService {
             commonResponse.setDecentMessage("Book History List Found!");
 
 
-            Page<BookHistory> bookList = bookHistoryRepository.findByUserIdAndReturned(userId,status, pageable);
+            Page<BookHistory> bookList = bookHistoryRepository.findByUserIdAndIsReturned(userId,status, pageable);
             if(bookList.getContent().isEmpty()){
                 throw new Exception("Data Not Found");
             }
@@ -169,7 +205,7 @@ public class BookHistoryService {
 
             bookHistory.setBook(book);
             bookHistory.setUser(user);
-            bookHistory.setReturned(false);
+            bookHistory.setIsReturned(false);
             bookHistory.setCopyAfter(book.getAvailable());
 
             bookHistoryRepository.save(bookHistory);
@@ -213,7 +249,7 @@ public class BookHistoryService {
 //                Book book =bookRepository.findById(bookId).get();
                 bookHistory.getBook().setAvailable(bookHistory.getBook().getAvailable()+1);
                 bookHistory.setCopyAfter(bookHistory.getBook().getAvailable());
-                bookHistory.setReturned(true);
+                bookHistory.setIsReturned(true);
                 bookHistory.setUpdatedAt(new Date());
                 bookHistoryRepository.save(bookHistory);
                 bookRepository.save(bookHistory.getBook());

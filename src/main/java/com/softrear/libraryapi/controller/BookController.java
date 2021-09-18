@@ -16,8 +16,8 @@ public class BookController {
 
 
         @RequestMapping(method = RequestMethod.GET, value = "/books")
-        public CommonResponse getBooks(){
-            return   bookService.getBooks();
+        public CommonResponse getBooks(Pageable pageable){
+            return   bookService.getBooks(pageable);
         }
 //
         @RequestMapping(method = RequestMethod.GET, value = "/books/{id}")

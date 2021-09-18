@@ -33,11 +33,19 @@ public class BookHistoryController {
     public CommonResponse getAllBookHistory(Pageable pageable) {
         return bookHistoryService.getBookHistory( pageable);
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/books/histories/{type}")
+    public CommonResponse getAllBookHistoryByStatus(@PathVariable String type, Pageable pageable) {
+        return bookHistoryService.getBookHistoryByStatus(type, pageable);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/books/{bookId}/histories")
     public CommonResponse getAllBookHistoryByBookId(@PathVariable (value = "bookId") Long bookId,
                                                     Pageable pageable) {
         return bookHistoryService.getBookHistoryByBookId(bookId, pageable);
     }
+
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/{bookId}/histories")
     public CommonResponse getAllBookHistoryByUserId(@PathVariable (value = "bookId") Long bookId,
@@ -59,7 +67,7 @@ public class BookHistoryController {
         return bookHistoryService.getBookHistoryByBooKAndStatus(bookId,status, pageable);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/users/{userId}histories/{bookType}")
+    @RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/histories/{bookType}")
     public CommonResponse getUserAllBookHistoryByStatus(@PathVariable (value = "userId") Long userId,
                                                     @PathVariable String bookType,
                                                     Pageable pageable) {

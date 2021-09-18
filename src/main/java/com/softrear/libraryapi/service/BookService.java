@@ -18,18 +18,18 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
-    public CommonResponse getBooks() {
+    public CommonResponse getBooks(Pageable pageable) {
         CommonResponse commonResponse=new CommonResponse();
         ObjectMapper objectMapper=new ObjectMapper();
         try {
 //        commonResponse.getContent="";
             commonResponse.setHasError(false);
             commonResponse.setDecentMessage("Vendor List Found!");
-            List<Book> bookList = bookRepository.findAll();
-//            if(!vendorList.()){
-//                throw new Exception("Data Not Found");
-//            }
-            commonResponse.setContent(objectMapper.writeValueAsString(bookRepository.findAll()));
+            Page<Book> bookList = bookRepository.findAll(pageable);
+            if(bookList.getContent().isEmpty()){
+                throw new Exception("Data Not Found");
+            }
+            commonResponse.setContent(objectMapper.writeValueAsString(bookList));
         }catch (Exception e){
             e.printStackTrace();
             commonResponse.setHasError(true);
@@ -93,7 +93,7 @@ public class BookService {
             commonResponse.setHasError(false);
             commonResponse.setDecentMessage("Success");
 //
-            Page<Book> books = bookRepository.findAllByTitleContainingOrIdContaining(value,pageable);
+            Page<Book> books = bookRepository.findAllByTitleContaining(value,pageable);
             if(books.getContent().isEmpty()){
                 throw new Exception("Data Not Found with the type of "+value);
             }

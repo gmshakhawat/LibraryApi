@@ -15,10 +15,12 @@ public interface BookHistoryRepository extends JpaRepository<BookHistory, Long> 
 
     Page<BookHistory> findByBookId(Long bookId, Pageable pageable);
     Page<BookHistory> findByUserId(Long userId, Pageable pageable);
+    Page<BookHistory> findByIsReturned(boolean returned, Pageable pageable);
+
 //    Page<BookHistory> findAllByBookContainingOr(Long userId, Pageable pageable);
 
-    Page<BookHistory> findByUserIdAndReturned(Long userId, boolean returned, Pageable pageable);
-    Page<BookHistory> findByBookIdAndReturned(Long userId, boolean returned, Pageable pageable);
+    Page<BookHistory> findByUserIdAndIsReturned(Long userId, boolean returned, Pageable pageable);
+    Page<BookHistory> findByBookIdAndIsReturned(Long bookId, boolean returned, Pageable pageable);
 
     //    Optional<BookHistory> findByIdAndBookId(Long id, Long bookId);
 
