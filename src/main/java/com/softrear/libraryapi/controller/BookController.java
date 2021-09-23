@@ -27,7 +27,16 @@ public class BookController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/books/search/{value}")
     public CommonResponse searchBookByIdOrTitle(@PathVariable String value, Pageable pageable){
+
+
         return bookService.searchBookByIdOrTitle(value,pageable);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/books/search/")
+    public CommonResponse searchBookByIdOrTitle( Pageable pageable){
+
+
+        return bookService.searchBookByIdOrTitle("",pageable);
     }
 
 

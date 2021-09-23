@@ -104,7 +104,7 @@ public class BookHistoryService {
             if(bookList.getContent().isEmpty()){
                 throw new Exception("Data Not Found");
             }
-            commonResponse.setContent(objectMapper.writeValueAsString(bookList.getContent()));
+            commonResponse.setContent(objectMapper.writeValueAsString(bookList));
         }catch (Exception e){
             e.printStackTrace();
             commonResponse.setHasError(true);
@@ -127,7 +127,7 @@ public class BookHistoryService {
             if(bookList.getContent().isEmpty()){
                 throw new Exception("Data Not Found");
             }
-            commonResponse.setContent(objectMapper.writeValueAsString(bookList.getContent()));
+            commonResponse.setContent(objectMapper.writeValueAsString(bookList));
         }catch (Exception e){
             e.printStackTrace();
             commonResponse.setHasError(true);
@@ -151,7 +151,7 @@ public class BookHistoryService {
             if(bookList.getContent().isEmpty()){
                 throw new Exception("Data Not Found");
             }
-            commonResponse.setContent(objectMapper.writeValueAsString(bookList.getContent()));
+            commonResponse.setContent(objectMapper.writeValueAsString(bookList));
         }catch (Exception e){
             e.printStackTrace();
             commonResponse.setHasError(true);
@@ -176,7 +176,7 @@ public class BookHistoryService {
             if(bookList.getContent().isEmpty()){
                 throw new Exception("Data Not Found");
             }
-            commonResponse.setContent(objectMapper.writeValueAsString(bookList.getContent()));
+            commonResponse.setContent(objectMapper.writeValueAsString(bookList));
         }catch (Exception e){
             e.printStackTrace();
             commonResponse.setHasError(true);

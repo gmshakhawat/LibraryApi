@@ -98,7 +98,7 @@ public class BookService {
                 throw new Exception("Data Not Found with the type of "+value);
             }
 
-            commonResponse.setContent(objectMapper.writeValueAsString(books.getContent()));
+            commonResponse.setContent(objectMapper.writeValueAsString(books));
         }catch (Exception e){
             e.printStackTrace();
             commonResponse.setHasError(true);

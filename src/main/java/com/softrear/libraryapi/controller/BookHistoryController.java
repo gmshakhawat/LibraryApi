@@ -59,9 +59,9 @@ public class BookHistoryController {
                                                         Pageable pageable) {
 
         boolean status=false;
-        if(bookType.toLowerCase(Locale.ROOT).equals("borrowed")){
+        if(bookType.toLowerCase(Locale.ROOT).equals("borrow")){
             status=false;
-        }else if(bookType.toLowerCase(Locale.ROOT).equals("returned")){
+        }else if(bookType.toLowerCase(Locale.ROOT).equals("return")){
             status=true;
         }
         return bookHistoryService.getBookHistoryByBooKAndStatus(bookId,status, pageable);
@@ -73,9 +73,9 @@ public class BookHistoryController {
                                                     Pageable pageable) {
 
         boolean status=false;
-        if(bookType.toLowerCase(Locale.ROOT).equals("borrowed")){
+        if(bookType.toLowerCase(Locale.ROOT).equals("borrow")){
             status=false;
-        }else if(bookType.toLowerCase(Locale.ROOT).equals("returned")){
+        }else if(bookType.toLowerCase(Locale.ROOT).equals("return")){
             status=true;
         }
         return bookHistoryService.getBookHistoryByUserBookStatus(userId,status, pageable);
